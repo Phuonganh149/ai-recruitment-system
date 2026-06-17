@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <script src="../js/auth-guard-user.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ Sơ Của Tôi — CVMS Ứng Viên</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../../admin/css/base.css">
+  <link rel="stylesheet" href="../../admin/css/components.css">
+  <link rel="stylesheet" href="../css/user.css">
+
+<style>
+#cv-drop-zone:hover, #cv-drop-zone.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-light, rgba(59,130,246,.06));
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <h2>CVMS</h2>
+      <p>Candidate Portal</p>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-section">Chính</div>
+      <a class="nav-item" href="dashboard.html" data-page="dashboard.html"><i class="ti ti-home"></i> Tổng quan</a>
+      <a class="nav-item" href="jobs.html"       data-page="jobs.html"><i class="ti ti-briefcase"></i> Việc làm</a>
+      <a class="nav-item" href="profile.html"    data-page="profile.html"><i class="ti ti-user"></i> Hồ sơ của tôi</a>
+    </nav>
+    <div class="sb-bottom">
+      <div class="avatar-row">
+        <div class="avatar">UV</div>
+        <div class="avatar-info"><p>Ứng viên</p><span>user@email.com</span></div>
+      </div>
+      <button id="logoutBtn" class="logout-btn">
+        <i class="ti ti-logout"></i> Đăng xuất
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <header class="topbar">
+      <span class="topbar-title">Hồ Sơ Của Tôi</span>
+      <div class="topbar-actions">
+        <div class="avatar sm">UV</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="row2" style="align-items:start">
+
+        <!-- Form thông tin cá nhân -->
+        <div class="card">
+          <div class="card-title">Thông tin cá nhân</div>
+          <div class="profile-grid">
+            <div class="form-field">
+              <label class="form-label">Họ và tên</label>
+              <input type="text"  id="p-name"    class="form-input" placeholder="Nhập họ và tên">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Email</label>
+              <input type="email" id="p-email"   class="form-input" readonly>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Số điện thoại</label>
+              <input type="tel"   id="p-phone"   class="form-input" placeholder="0912 345 678">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Địa chỉ</label>
+              <input type="text"  id="p-address" class="form-input" placeholder="Hà Nội, Việt Nam">
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Giới thiệu bản thân</label>
+              <textarea id="p-bio" class="form-input" placeholder="Mô tả ngắn về kỹ năng và kinh nghiệm của bạn..."></textarea>
+            </div>
+          </div>
+
+          <div class="profile-section-title">Mục tiêu nghề nghiệp</div>
+          <div class="profile-grid">
+            <div class="form-field">
+              <label class="form-label">Vị trí mong muốn</label>
+              <input type="text" id="p-target-position" class="form-input" placeholder="VD: Chuyên viên Marketing, Kế toán tổng hợp">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Cấp kinh nghiệm</label>
+              <select id="p-experience-level" class="form-input">
+                <option value="">Chọn cấp kinh nghiệm</option>
+                <option>Thực tập sinh</option>
+                <option>Mới tốt nghiệp</option>
+                <option>1-2 năm kinh nghiệm</option>
+                <option>3-5 năm kinh nghiệm</option>
+                <option>Trưởng nhóm / Quản lý</option>
+                <option>Chuyên gia</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Mức lương kỳ vọng</label>
+              <input type="text" id="p-expected-salary" class="form-input" placeholder="VD: 12-16 triệu">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Hình thức làm việc</label>
+              <select id="p-work-type" class="form-input">
+                <option value="">Chọn hình thức</option>
+                <option>Toàn thời gian</option>
+                <option>Bán thời gian</option>
+                <option>Thực tập</option>
+                <option>Remote</option>
+                <option>Hybrid</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Địa điểm mong muốn</label>
+              <input type="text" id="p-desired-locations" class="form-input" placeholder="VD: Hà Nội, Hồ Chí Minh, Đà Nẵng">
+            </div>
+          </div>
+
+          <div class="profile-section-title">Năng lực & liên kết</div>
+          <div class="profile-grid">
+            <div class="form-field full">
+              <label class="form-label">Học vấn / chứng chỉ</label>
+              <textarea id="p-education" class="form-input" placeholder="VD: Đại học Kinh tế Quốc dân - Kế toán; IELTS 6.5; Chứng chỉ Google Digital Marketing..."></textarea>
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Kỹ năng nổi bật</label>
+              <textarea id="p-skills" class="form-input" placeholder="Nhập kỹ năng, cách nhau bằng dấu phẩy. VD: Excel, giao tiếp, tuyển dụng, phân tích dữ liệu"></textarea>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Portfolio / Website</label>
+              <input type="url" id="p-portfolio" class="form-input" placeholder="https://...">
+            </div>
+            <div class="form-field">
+              <label class="form-label">LinkedIn</label>
+              <input type="url" id="p-linkedin" class="form-input" placeholder="https://linkedin.com/in/...">
+            </div>
+          </div>
+          <button id="save-profile" class="save-btn" style="margin-top:16px">
+            <i class="ti ti-device-floppy"></i> Lưu thông tin
+          </button>
+        </div>
+
+        <div class="profile-side-col">
+        <!-- ── Upload CV ───────────────────────────────── -->
+        <div class="card" style="margin-top:14px">
+          <div class="card-title"><i class="ti ti-file-upload"></i> Tải CV lên</div>
+
+          <!-- Drop zone -->
+          <div id="cv-drop-zone" style="border:2px dashed var(--border);border-radius:var(--radius-lg);padding:32px 24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)">
+            <div style="font-size:40px;margin-bottom:8px">📎</div>
+            <div style="font-weight:600;font-size:14px;margin-bottom:4px">Kéo thả file vào đây hoặc click để chọn</div>
+            <div style="font-size:12px;color:var(--text-secondary)">Hỗ trợ: PDF, Word (.doc, .docx), ảnh JPG/PNG — Tối đa 5MB</div>
+            <input type="file" id="cv-file-input" accept="application/pdf,.pdf" style="display:none">
+          </div>
+
+          <!-- CV hiện tại -->
+          <div style="margin-top:12px">
+            <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">CV hiện tại</div>
+            <div id="cv-current"></div>
+          </div>
+
+          <div style="margin-top:14px">
+            <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Ngành muốn ứng tuyển</div>
+            <div id="cv-industry-options" class="industry-options">
+              <label><input type="checkbox" value="Công nghệ thông tin"> Công nghệ thông tin</label>
+              <label><input type="checkbox" value="Marketing"> Marketing</label>
+              <label><input type="checkbox" value="Kinh doanh / Sales"> Kinh doanh / Sales</label>
+              <label><input type="checkbox" value="Tài chính / Kế toán"> Tài chính / Kế toán</label>
+              <label><input type="checkbox" value="Nhân sự"> Nhân sự</label>
+              <label><input type="checkbox" value="Thiết kế / Sáng tạo"> Thiết kế / Sáng tạo</label>
+              <label><input type="checkbox" value="Vận hành / Logistics"> Vận hành / Logistics</label>
+              <label><input type="checkbox" value="Giáo dục / Đào tạo"> Giáo dục / Đào tạo</label>
+              <label><input type="checkbox" value="Y tế / Chăm sóc sức khỏe"> Y tế / Chăm sóc sức khỏe</label>
+              <label><input type="checkbox" value="Pháp lý / Tuân thủ"> Pháp lý / Tuân thủ</label>
+              <label><input type="checkbox" value="Sản xuất / Kỹ thuật"> Sản xuất / Kỹ thuật</label>
+            </div>
+            <div style="font-size:11px;color:var(--text-secondary);margin-top:8px">Có thể chọn nhiều ngành cho cùng một CV.</div>
+          </div>
+        </div>
+
+
+        <!-- Kỹ năng + Trạng thái hồ sơ -->
+
+          <!-- Độ hoàn thiện hồ sơ -->
+          <div class="card">
+            <div class="card-title">Độ hoàn thiện hồ sơ</div>
+            <div id="profile-completeness-list" style="display:flex;flex-direction:column;gap:10px"></div>
+            <div style="margin-top:14px;padding:12px;background:var(--accent-light);border-radius:var(--radius-md);text-align:center">
+              <span id="profile-completeness-score" style="font-size:22px;font-weight:800;color:var(--accent)">0%</span>
+              <span style="font-size:12px;color:var(--accent-text);margin-left:6px">Hồ sơ của bạn</span>
+            </div>
+            <div id="profile-next-step" style="margin-top:10px;font-size:12px;color:var(--text-secondary);line-height:1.5"></div>
+          </div>
+
+          <!-- Kỹ năng -->
+          <div class="card">
+            <div class="card-title">Kỹ năng nổi bật</div>
+            <div id="profile-skill-tags" style="display:flex;flex-wrap:wrap;gap:7px"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Tóm tắt ứng tuyển</div>
+            <div id="profile-summary-box" class="profile-summary-box"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bảng lịch sử ứng tuyển -->
+      <div class="table-wrap" style="margin-top:16px">
+        <div class="table-title">Lịch sử ứng tuyển</div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Vị trí</th><th>Địa điểm</th><th>Ngày nộp</th><th>Trạng thái</th><th>Ghi chú từ Admin</th></tr>
+          </thead>
+          <tbody id="my-applications">
+            <tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-secondary)">Chưa có đơn ứng tuyển nào.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<script src="../../jss/data.js"></script>
+<script src="../../jss/notif-ui.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/profile.js"></script>
+<script src="/jss/ai-chatbot-widget.js"></script>
+</body>
+</html>

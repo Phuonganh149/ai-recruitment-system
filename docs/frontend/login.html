@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - CVMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+<body>
+
+<!-- Toast thông báo -->
+<div id="toast" class="toast"></div>
+
+<div class="login-page-header">
+    <a href="./Trangchu.html" class="back-home">
+        <i class="fa-solid fa-arrow-left"></i> Về trang chủ
+    </a>
+    <img src="./IMG/logo.jpg" alt="CVMS" class="logo">
+</div>
+
+<div class="container" id="container">
+
+    <!-- FORM ĐĂNG KÝ -->
+    <div class="form-container sign-up">
+        <form id="signUpForm" onsubmit="handleSignUp(event)">
+            <h1>Tạo Tài Khoản</h1>
+            <div class="social-icons">
+                <button type="button" class="icon" onclick="handleOAuth('google')"><i class="fa-brands fa-google"></i> Google</button>
+                <button type="button" class="icon" onclick="handleOAuth('facebook')"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
+                <button type="button" class="icon" onclick="handleOAuth('github')"><i class="fa-brands fa-github"></i> GitHub</button>
+            </div>
+            <span>hoặc dùng email để đăng ký</span>
+            <select id="reg-role" class="auth-select">
+                <option value="user">Ứng viên tìm việc</option>
+                <option value="company">Doanh nghiệp muốn đăng bài</option>
+            </select>
+            <input type="text"     id="reg-name" autocomplete="name"     placeholder="Họ và tên" required>
+            <input type="email"    id="reg-email" autocomplete="email"    placeholder="Email" required>
+            <input type="password" id="reg-password" autocomplete="new-password" placeholder="Mật khẩu (ít nhất 6 ký tự)" required>
+            <button type="submit">Đăng Ký</button>
+            <a class="booking-link" href="./booking.html">Doanh nghiệp cần book admin đăng bài? Mở trang booking</a>
+        </form>
+    </div>
+
+    <!-- FORM ĐĂNG NHẬP -->
+    <div class="form-container sign-in">
+        <form id="signInForm" onsubmit="handleSignIn(event)">
+            <h1>Đăng Nhập</h1>
+            <div class="social-icons">
+                <button type="button" class="icon" onclick="handleOAuth('google')"><i class="fa-brands fa-google"></i> Google</button>
+                <button type="button" class="icon" onclick="handleOAuth('facebook')"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
+                <button type="button" class="icon" onclick="handleOAuth('github')"><i class="fa-brands fa-github"></i> GitHub</button>
+            </div>
+            <span>hoặc dùng email và mật khẩu</span>
+            <input type="email"    id="login-email" autocomplete="email"    placeholder="Email" required>
+            <input type="password" id="login-password" autocomplete="current-password" placeholder="Mật khẩu" required>
+            <a href="#" onclick="forgotPassword()">Quên mật khẩu?</a>
+            <button type="submit">Đăng Nhập</button>
+        </form>
+    </div>
+
+    <!-- TOGGLE PANEL -->
+    <div class="toggle-container">
+        <div class="toggle">
+            <div class="toggle-panel toggle-left">
+                <h1>Chào Mừng Trở Lại!</h1>
+                <p>Nhập thông tin cá nhân để sử dụng đầy đủ tính năng của CVMS</p>
+                <button class="hidden" id="login">Đăng Nhập</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Xin Chào</h1>
+                <p>Đăng ký tài khoản để ứng tuyển hoặc book admin đăng bài cho doanh nghiệp</p>
+                <button class="hidden" id="register">Đăng Ký</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./jss/supabase-auth.js"></script>
+<script src="./jss/login.js?v=20260614-supabase-auth"></script>
+<script src="/jss/ai-chatbot-widget.js"></script>
+</body>
+</html>

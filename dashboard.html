@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <script src="../js/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doanh nghiệp - CVMS</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../../admin/css/base.css">
+  <link rel="stylesheet" href="../../admin/css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sb-logo"><h2>CVMS</h2><p>Company Portal</p></div>
+    <nav class="sb-nav">
+      <div class="nav-section">Doanh nghiệp</div>
+      <a class="nav-item active" href="#overview"><i class="ti ti-layout-dashboard"></i> Tổng quan</a>
+      <a class="nav-item" href="#jobs" data-company-tab="jobs"><i class="ti ti-briefcase"></i> Tin tuyển dụng</a>
+      <a class="nav-item" href="#applications" data-company-tab="applications"><i class="ti ti-users"></i> Ứng viên</a>
+      <a class="nav-item" href="#wallet" data-company-tab="wallet"><i class="ti ti-wallet"></i> Ví & giao dịch</a>
+      <a class="nav-item" href="#pipeline" data-company-tab="pipeline"><i class="ti ti-route"></i> Pipeline</a>
+      <a class="nav-item" href="#interviews" data-company-tab="interviews"><i class="ti ti-calendar"></i> Lịch phỏng vấn</a>
+      <a class="nav-item" href="../../booking.html"><i class="ti ti-receipt"></i> Mua gói đăng tuyển</a>
+      <a class="nav-item" href="../../Trangchu.html"><i class="ti ti-home"></i> Trang chủ</a>
+    </nav>
+    <div class="sb-bottom">
+      <div class="avatar-row">
+        <div class="avatar">DN</div>
+        <div class="avatar-info"><p id="companyMiniName">Doanh nghiệp</p><span>Đối tác doanh nghiệp</span></div>
+      </div>
+      <button id="logoutBtn" class="logout-btn"><i class="ti ti-logout"></i> Đăng xuất</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <span class="topbar-title">Cổng doanh nghiệp</span>
+      <div class="topbar-actions">
+        <button class="add-btn" type="button" onclick="focusJobForm()"><i class="ti ti-plus"></i> Tạo tin</button>
+        <button class="notif-btn" title="Thông báo"><i class="ti ti-bell"></i></button>
+        <div class="avatar sm">DN</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section id="overview" class="company-welcome">
+        <div>
+          <span>Xin chào</span>
+          <h1 id="companyNameTitle">Doanh nghiệp</h1>
+          <p>Doanh nghiệp tự đăng tin, nhận hồ sơ trực tiếp, xem hồ sơ ẩn danh trước và chỉ mở khóa CV khi cần liên hệ ứng viên.</p>
+        </div>
+        <a class="add-btn ghost-link" href="../../booking.html"><i class="ti ti-package"></i> Mua gói đăng tuyển</a>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Số dư ví</div><div class="stat-val" id="stat-wallet">0đ</div><div class="stat-delta">Dùng để mở CV</div></div>
+        <div class="stat-card"><div class="stat-label">Tin đang tuyển</div><div class="stat-val" id="stat-jobs">0</div><div class="stat-delta delta-up">Doanh nghiệp tự quản lý</div></div>
+        <div class="stat-card"><div class="stat-label">Hồ sơ nhận được</div><div class="stat-val" id="stat-applications">0</div><div class="stat-delta">Theo tin của công ty</div></div>
+        <div class="stat-card"><div class="stat-label">CV đã mở</div><div class="stat-val" id="stat-unlocked">0</div><div class="stat-delta delta-warn">Không tính phí lần 2</div></div>
+      </section>
+
+      <section class="company-feature-hub" aria-label="Ch?c n?ng doanh nghi?p">
+        <a href="#jobs" data-company-tab="jobs"><i class="ti ti-briefcase"></i><strong>Tin tuy?n d?ng</strong><span>T?o, s?a, ??ng, t?m d?ng, ??ng tin</span></a>
+        <a href="#applications" data-company-tab="applications"><i class="ti ti-users"></i><strong>?ng vi?n</strong><span>Nh?n h? s? tr?c ti?p theo tin c?a c?ng ty</span></a>
+        <a href="#wallet" data-company-tab="wallet"><i class="ti ti-wallet"></i><strong>V? & n?p ti?n</strong><span>N?p v? b?ng QR Vietcombank</span></a>
+        <a href="#unlocked-cvs" data-company-tab="unlocked-cvs"><i class="ti ti-file-check"></i><strong>CV ?? m?</strong><span>Xem l?i kh?ng b? tr? ph? l?n hai</span></a>
+        <a href="#pipeline" data-company-tab="pipeline"><i class="ti ti-route"></i><strong>Pipeline</strong><span>C?p nh?t v?ng tuy?n d?ng</span></a>
+        <a href="#interviews" data-company-tab="interviews"><i class="ti ti-calendar"></i><strong>L?ch ph?ng v?n</strong><span>??t v? theo d?i l?ch ph?ng v?n</span></a>
+      </section>
+
+      <section id="jobs" data-company-section="jobs" class="portal-section company-tab-section portal-grid">
+        <div class="table-wrap company-panel">
+          <div class="table-title">Tạo / sửa tin tuyển dụng</div>
+          <form id="companyJobForm" class="company-form">
+            <input type="hidden" id="job-id">
+            <label>Vị trí<input id="job-title" required placeholder="VD: Nhân viên kinh doanh B2B"></label>
+            <label>Ngành / phòng ban<input id="job-dept" required placeholder="Kinh doanh, Marketing, Kế toán..."></label>
+            <label>Địa điểm<input id="job-location" required placeholder="Hà Nội"></label>
+            <label>Lương<input id="job-salary" placeholder="12-18 tr"></label>
+            <label>Hạn nộp<input id="job-deadline" placeholder="30/07/2026"></label>
+            <label>Số lượng<input id="job-qty" type="number" min="1" value="1"></label>
+            <label class="span-2">Tags<input id="job-tags" placeholder="Sales, CRM, Toàn thời gian"></label>
+            <div class="form-actions span-2">
+              <button class="add-btn" type="submit"><i class="ti ti-device-floppy"></i> Lưu tin</button>
+              <button class="action-btn" type="button" onclick="resetJobForm()">Hủy sửa</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-title">Tin tuyển dụng của công ty</div>
+          <table class="data-table">
+            <thead><tr><th>Vị trí</th><th>Ứng viên</th><th>Trạng thái</th><th></th></tr></thead>
+            <tbody id="companyJobBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="applications" data-company-section="applications" class="portal-section company-tab-section table-wrap">
+        <div class="table-title">Hồ sơ ứng viên nhận trực tiếp</div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Ứng viên</th><th>Vị trí</th><th>AI</th><th>Pipeline</th><th>CV</th></tr>
+          </thead>
+          <tbody id="companyApplicationBody"></tbody>
+        </table>
+      </section>
+
+      <section id="wallet" data-company-section="wallet" class="portal-section company-tab-section portal-grid">
+        <div class="table-wrap company-panel">
+          <div class="table-title">Nạp ví mở CV</div>
+          <form id="walletTopupForm" class="company-form one-col">
+            <label>Số tiền nạp<input id="topup-amount" type="number" min="50000" step="10000" placeholder="500000"></label>
+            <label>Ghi chú chuyển khoản<input id="topup-note" placeholder="VD: Nạp ví công ty ABC"></label>
+            <button class="add-btn" type="submit"><i class="ti ti-send"></i> Gửi yêu cầu nạp</button>
+          </form>
+          <p class="hint">Admin xác nhận nạp ví sau khi kiểm tra chuyển khoản. Tiền nạp ví chưa tính là doanh thu nền tảng.</p>
+        </div>
+        <div class="table-wrap">
+          <div class="table-title">Lịch sử giao dịch ví</div>
+          <table class="data-table">
+            <thead><tr><th>Loại</th><th>Số tiền</th><th>Sau giao dịch</th><th>Thời gian</th></tr></thead>
+            <tbody id="walletTransactionBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="unlocked-cvs" data-company-section="unlocked-cvs" class="portal-section company-tab-section table-wrap">
+        <div class="table-title">CV ?? m? quy?n xem</div>
+        <table class="data-table">
+          <thead><tr><th>?ng vi?n</th><th>V? tr?</th><th>Ph? ?? tr?</th><th>Th?i gian</th><th></th></tr></thead>
+          <tbody id="unlockedCvBody"></tbody>
+        </table>
+      </section>
+
+      <section id="pipeline" data-company-section="pipeline" class="portal-section company-tab-section table-wrap">
+        <div class="table-title">Pipeline tuyển dụng</div>
+        <div class="pipeline-board" id="pipelineBoard"></div>
+      </section>
+
+      <section id="interviews" data-company-section="interviews" class="portal-section company-tab-section table-wrap">
+        <div class="table-title">Lịch phỏng vấn</div>
+        <table class="data-table">
+          <thead><tr><th>Ứng viên</th><th>Vị trí</th><th>Thời gian</th><th>Ghi chú</th></tr></thead>
+          <tbody id="interviewBody"></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="../../jss/data.js"></script>
+<script src="../../jss/notif-ui.js"></script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>

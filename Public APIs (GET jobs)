@@ -1,8 +1,36 @@
-// GET /api/jobs - Danh sách tin tuyển dụng (hỗ trợ filter companyId)
+// GET /api/jobs - Danh sách tin tuyển dụng (Hỗ trợ tìm kiếm & bộ lọc nâng cao)
 if (method === 'GET' && path === '/api/jobs') {
-  const companyId = Number(url.searchParams.get('companyId') || 0);
-  const jobs = await store.getJobs();
-  return sendJson(res, 200, { 
-    jobs: companyId ? jobs.filter(j => Number(j.companyId) === companyId) : jobs 
-  });
+  // 1. Lấy tất cả các tham số lọc từ URL query string
+  const keyword = url.searchParams.get('keyword')?.toLowerCase() || ''; // Từ khóa (tiêu đề, mô tả...)
+  const location = url.searchParams.get('location') || '';              // Địa điểm
+  const skill = url.searchParams.get('skill')?.toLowerCase() || '';     // Kỹ năng yêu cầu
+  const minSalary = Number(url.searchParams.get('minSalary') || 0);     // Mức lương tối thiểu
+
+  // 2. Lấy toàn bộ danh sách jobs gốc từ database/store
+  let jobs = await store.getJobs();
+
+  // 3. Thực hiện lọc (Filter) dữ liệu theo từng tiêu chí đã thiết kế
+  
+  // - Lọc theo từ khóa (Tìm trong tiêu đề công việc)
+  if (keyword) {
+    jobs = jobs.filter(j => j.title?.toLowerCase().includes(keyword));
+  }
+
+  // - Lọc theo địa điểm
+  if (location) {
+    jobs = jobs.filter(j => j.location === location);
+  }
+
+  // - Lọc theo kỹ năng (Giả sử skills trong database là một mảng)
+  if (skill) {
+    jobs = jobs.filter(j => j.skills?.some(s => s.toLowerCase().includes(skill)));
+  }
+
+  // - Lọc theo mức lương (Giả sử lương của job lớn hơn hoặc bằng mức lương tối thiểu user cần)
+  if (minSalary) {
+    jobs = jobs.filter(j => Number(j.salary) >= minSalary);
+  }
+
+  // 4. Trả kết quả đã lọc về cho client
+  return sendJson(res, 200, { jobs });
 }

@@ -1,0 +1,67 @@
+// ==========================================
+// PHÁT TRIỂN COMPANY APIs
+// ==========================================
+
+// 1. POST /api/company/jobs - Tạo tin tuyển dụng mới
+if (method === 'POST' && path === '/api/company/jobs') {
+  if (!requireRole(res, authUser, 'company')) return;
+  return sendJson(res, 200, { 
+    ok: true, 
+    job: await store.addCompanyJob(authUser, body) 
+  });
+}
+
+// 2. GET /api/company/jobs - Danh sách tin của công ty (Chỉ lấy tin của công ty đang đăng nhập)
+if (method === 'GET' && path === '/api/company/jobs') {
+  if (!requireRole(res, authUser, 'company')) return;
+  return sendJson(res, 200, {
+    ok: true,
+    jobs: await store.getCompanyJobs(authUser) // Chỉ lấy các tin thuộc authUser.companyId và chưa bị xóa
+  });
+}
+
+// Định nghĩa regex cho các route có chứa tham số :id
+const companyJobIdMatch = path.match(/^\/api\/company\/jobs\/(\d+)$/);
+const companyJobStatusMatch = path.match(/^\/api\/company\/jobs\/(\d+)\/status$/);
+
+if (companyJobIdMatch) {
+  const jobId = Number(companyJobIdMatch[1]);
+
+  // 3. GET /api/company/jobs/:id - Chi tiết tin của công ty
+  if (method === 'GET') {
+    if (!requireRole(res, authUser, 'company')) return;
+    const job = await store.getCompanyJobDetail(authUser, jobId);
+    if (!job) return sendJson(res, 404, { ok: false, message: 'Không tìm thấy tin tuyển dụng hoặc bạn không có quyền xem' });
+    
+    return sendJson(res, 200, { ok: true, job });
+  }
+
+  // 4. PATCH /api/company/jobs/:id - Cập nhật tin
+  if (method === 'PATCH') {
+    if (!requireRole(res, authUser, 'company')) return;
+    return sendJson(res, 200, { 
+      ok: true, 
+      job: await store.updateCompanyJob(authUser, jobId, body) 
+    });
+  }
+
+  // 6. DELETE /api/company/jobs/:id - Xóa mềm (soft delete)
+  if (method === 'DELETE') {
+    if (!requireRole(res, authUser, 'company')) return;
+    await store.softDeleteCompanyJob(authUser, jobId); // Đổi trạng thái isDeleted = true hoặc deletedAt = ngày hiện tại
+    return sendJson(res, 200, { 
+      ok: true, 
+      message: 'Xóa tin tuyển dụng thành công (Xóa mềm)' 
+    });
+  }
+}
+
+// 5. PATCH /api/company/jobs/:id/status - Đóng/mở tin (active ↔ closed)
+if (method === 'PATCH' && companyJobStatusMatch) {
+  if (!requireRole(res, authUser, 'company')) return;
+  const jobId = Number(companyJobStatusMatch[1]);
+  return sendJson(res, 200, { 
+    ok: true, 
+    job: await store.updateCompanyJobStatus(authUser, jobId, body.status || body.action) 
+  });
+}

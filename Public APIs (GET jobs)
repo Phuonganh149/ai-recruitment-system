@@ -1,0 +1,8 @@
+// GET /api/jobs - Danh sách tin tuyển dụng (hỗ trợ filter companyId)
+if (method === 'GET' && path === '/api/jobs') {
+  const companyId = Number(url.searchParams.get('companyId') || 0);
+  const jobs = await store.getJobs();
+  return sendJson(res, 200, { 
+    jobs: companyId ? jobs.filter(j => Number(j.companyId) === companyId) : jobs 
+  });
+}

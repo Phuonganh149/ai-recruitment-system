@@ -1,0 +1,54 @@
+// ==========================================
+// PHÁT TRIỂN ADMIN APIs
+// ==========================================
+
+// 1. GET /api/admin/jobs - Quản lý tất cả tin (Hỗ trợ đa bộ lọc)
+if (method === 'GET' && path === '/api/admin/jobs') {
+  if (!requireRole(res, authUser, 'admin')) return;
+
+  // Lấy các tham số lọc từ URL query string
+  const moderationStatus = url.searchParams.get('moderationStatus') || ''; // pending, approved, rejected
+  const companyId = Number(url.searchParams.get('companyId') || 0);        // Theo công ty
+  const status = url.searchParams.get('status') || '';                    // active, closed
+
+  // Gọi store lấy toàn bộ danh sách kèm bộ lọc thông qua tham số truyền vào
+  const jobs = await store.getAdminJobs({ moderationStatus, companyId, status });
+
+  return sendJson(res, 200, { ok: true, jobs });
+}
+
+// Định nghĩa regex cho các route Admin có chứa tham số :id
+const adminJobIdMatch = path.match(/^\/api\/admin\/jobs\/(\d+)$/);
+const adminJobModerateMatch = path.match(/^\/api\/admin\/jobs\/(\d+)\/moderate$/);
+
+// 2. GET /api/admin/jobs/:id - Xem chi tiết tin dưới góc nhìn Admin
+if (method === 'GET' && adminJobIdMatch) {
+  if (!requireRole(res, authUser, 'admin')) return;
+  const jobId = Number(adminJobIdMatch[1]);
+
+  const job = await store.getAdminJobDetail(jobId);
+  if (!job) return sendJson(res, 404, { ok: false, message: 'Không tìm thấy tin tuyển dụng' });
+
+  return sendJson(res, 200, { ok: true, job });
+}
+
+// 3. PATCH /api/admin/jobs/:id/moderate - Phê duyệt / Từ chối tin + ghi note lý do
+if (method === 'PATCH' && adminJobModerateMatch) {
+  if (!requireRole(res, authUser, 'admin')) return;
+  const jobId = Number(adminJobModerateMatch[1]);
+
+  // Nhận trạng thái duyệt (status: 'approved'/'rejected') và ghi chú (note/reason) từ body
+  const { status, note } = body; 
+
+  if (!status) {
+    return sendJson(res, 400, { ok: false, message: 'Thiếu trạng thái phê duyệt (status)' });
+  }
+
+  const updatedJob = await store.moderateJob(jobId, { status, note, moderatedBy: authUser.id });
+
+  return sendJson(res, 200, { 
+    ok: true, 
+    message: `Đã ${status === 'approved' ? 'phê duyệt' : 'từ chối'} tin tuyển dụng thành công.`,
+    job: updatedJob 
+  });
+}

@@ -1,13 +1,14 @@
 {
   "name": "ai-recruitment-system",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CVMS AI Recruitment System prototype with Node.js backend, Supabase integration, and recruitment management UI.",
   "type": "module",
   "private": true,
   "scripts": {
     "start": "node serve.mjs",
-    "syntax-check": "node --check serve.mjs && node --check db-adapter.mjs && node --check data.js && node --check dashboard.js",
-    "test": "npm run syntax-check"
+    "test:syntax": "node --check serve.mjs && node --check db-adapter.mjs && node --check data.js && node --check dashboard.js && node --check tests/release-readiness.test.mjs",
+    "test:readiness": "node --test tests/*.test.mjs",
+    "test": "npm run test:syntax && npm run test:readiness"
   },
   "engines": {
     "node": ">=20"

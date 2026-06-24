@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - 2026-06-24
+
+### Added
+
+* Added Node.js release-readiness tests under `tests/`.
+* Added `docs/DEPLOYMENT.md` with local deployment, Supabase setup, verification, and rollback guidance.
+* Added `docs/SECURITY_REVIEW.md` covering secrets, privacy, authorization, dependency hygiene, and known security limitations.
+* Added `docs/MANUAL_TEST_REPORT.md` with automated and manual smoke-test evidence.
+
+### Changed
+
+* Expanded `npm test` to run both syntax checks and release-readiness tests.
+* Updated CI job naming to reflect release readiness instead of syntax-only verification.
+* Updated release documentation coverage for stronger review traceability.
+
+### Known Limitations
+
+* Automated tests do not yet cover full browser or Supabase integration flows.
+* Production deployment URL is not included in this prerelease.
+
 ## [0.1.1] - 2026-06-24
 
 ### Added

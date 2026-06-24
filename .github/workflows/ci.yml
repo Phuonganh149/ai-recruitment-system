@@ -11,8 +11,8 @@ on:
       - main
 
 jobs:
-  syntax-check:
-    name: Node.js syntax check
+  release-readiness:
+    name: Release readiness checks
     runs-on: ubuntu-latest
 
     steps:
@@ -24,5 +24,5 @@ jobs:
         with:
           node-version: 20
 
-      - name: Run project checks
+      - name: Run release readiness checks
         run: npm test

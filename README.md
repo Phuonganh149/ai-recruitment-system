@@ -290,7 +290,7 @@ http://localhost:4173
 npm test
 ```
 
-The current test command performs syntax verification for the Node.js and JavaScript entry points. Additional manual release checks are documented in `docs/TESTING.md`.
+The current test command performs syntax verification and release-readiness checks. Additional manual release checks are documented in `docs/TESTING.md` and `docs/MANUAL_TEST_REPORT.md`.
 
 ---
 
@@ -364,10 +364,10 @@ Example route groups:
 Current planned release:
 
 ```text
-v0.1.1 - Release Quality Baseline
+v0.1.2 - Release Readiness Baseline
 ```
 
-This release marks a release-quality prototype milestone. It is still a prerelease because production deployment, full automated tests, and complete Supabase/AI environment validation are not finished yet.
+This release marks a release-readiness prototype milestone. It is still a prerelease because production hosting, full browser automation, and complete Supabase/AI integration tests are not finished yet.
 
 Included in this milestone:
 
@@ -380,8 +380,10 @@ Included in this milestone:
 * AI chatbot integration orientation.
 * Documentation and release preparation files.
 * Node.js syntax checks through `npm test`.
+* Node.js release-readiness tests through `npm test`.
 * GitHub Actions CI workflow.
 * Testing evidence and release checklist documents.
+* Deployment, security review, and manual test report documents.
 
 ---
 
@@ -399,6 +401,9 @@ Main documentation groups:
 * Use case documentation.
 * Testing evidence.
 * Release checklist.
+* Deployment guide.
+* Security review.
+* Manual test report.
 
 ---
 

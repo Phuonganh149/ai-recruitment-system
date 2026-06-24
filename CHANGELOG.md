@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.1] - 2026-06-24
+
+### Added
+
+* Added `package.json` with `start`, `syntax-check`, and `test` scripts.
+* Added GitHub Actions CI workflow for Node.js syntax verification.
+* Added `docs/TESTING.md` with automated and manual verification evidence.
+* Added `docs/RELEASE_CHECKLIST.md` to standardize future GitHub Releases.
+
+### Changed
+
+* Clarified release readiness for the prototype milestone.
+* Updated release preparation materials for better traceability and reproducibility.
+
+### Known Limitations
+
+* Automated checks are currently syntax-level only.
+* Supabase-backed flows require external environment configuration.
+* AI chatbot features require external API keys.
+
 ## [0.1.0] - 2026-06-19
 
 ### Added

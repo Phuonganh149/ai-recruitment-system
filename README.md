@@ -225,6 +225,12 @@ ai-recruitment-system/
 
 ## Installation & Setup
 
+### Requirements
+
+* Node.js 20 or newer.
+* A Supabase project for database-backed flows.
+* Environment variables configured from `.env.example`.
+
 ### 1. Clone Repository
 
 ```bash
@@ -269,7 +275,7 @@ Make sure the required tables, policies, functions, and storage bucket are confi
 ### 4. Run the Application
 
 ```bash
-node serve.mjs
+npm start
 ```
 
 Default local address:
@@ -277,6 +283,14 @@ Default local address:
 ```text
 http://localhost:4173
 ```
+
+### 5. Run Verification Checks
+
+```bash
+npm test
+```
+
+The current test command performs syntax verification for the Node.js and JavaScript entry points. Additional manual release checks are documented in `docs/TESTING.md`.
 
 ---
 
@@ -350,10 +364,12 @@ Example route groups:
 Current planned release:
 
 ```text
-v0.1.0 - Initial Version
+v0.1.1 - Release Quality Baseline
 ```
 
-This release marks the first stable milestone of the project, including:
+This release marks a release-quality prototype milestone. It is still a prerelease because production deployment, full automated tests, and complete Supabase/AI environment validation are not finished yet.
+
+Included in this milestone:
 
 * Initial project structure.
 * Recruitment platform UI pages.
@@ -363,6 +379,9 @@ This release marks the first stable milestone of the project, including:
 * Candidate application flow.
 * AI chatbot integration orientation.
 * Documentation and release preparation files.
+* Node.js syntax checks through `npm test`.
+* GitHub Actions CI workflow.
+* Testing evidence and release checklist documents.
 
 ---
 
@@ -378,6 +397,8 @@ Main documentation groups:
 * Database documentation.
 * Software Requirement Specification.
 * Use case documentation.
+* Testing evidence.
+* Release checklist.
 
 ---
 
